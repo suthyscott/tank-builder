@@ -1,6 +1,9 @@
 import React from 'react';
 import tanksArr from '../Tanks'
 import '../App.css';
+import {connect} from 'react-redux'
+import {saveTank} from '../ducks/tanksReducer'
+import {Link} from 'react-router-dom'
 
 class Landing extends React.Component {
   constructor(){
@@ -87,10 +90,11 @@ class Landing extends React.Component {
     console.log(this.state)
 
     const tanksDisplay = this.state.tanks.map(tank => {
-      // console.log(tank)
       return <div className='tank-info'>
         <div id='title-pic'>
-          <h1>{tank.name}</h1> <img className='tank-image' src={tank.img} />
+          <h1>{tank.name}</h1> 
+          <button className='button' onClick={() => this.props.saveTank(tank)}>Save Tank</button>
+          <img className='tank-image' src={tank.img} />
         </div>
 
         <p>{tank.gun.production}</p>
@@ -104,6 +108,7 @@ class Landing extends React.Component {
     return (
     <main>
       <h1>Scott's Legendary Tank Builder</h1>
+      <Link to='/mytanks'><button className='button'>My Tanks</button></Link>
 
       <section>
         <input 
@@ -146,4 +151,4 @@ class Landing extends React.Component {
   
 }
 
-export default Landing;
+export default connect(null, {saveTank})(Landing);
